@@ -1,0 +1,237 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-comp .swithTheme-btn {
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 0;
+}
+.HeaderContainer .swithTheme-btn {
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  right: 16px;
+}
+
+.login-comp {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.login-comp > div {
+  width: 330px;
+  margin: 0;
+  padding: 15px 0;
+  border-radius: 7px;
+  background-color: rgba(250, 250, 250, 5%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.login-comp > .userLoginError {
+  position: absolute;
+  height: 210px;
+  background-color: rgb(40, 40, 40);
+  z-index: 11;
+}
+.login-input {
+  margin-bottom: 12px;
+}
+.signup-link {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 0 0 2px;
+  color: rgb(25, 113, 194);
+}
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+.home-navbar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.home-navbar .navbar-content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+.home-navbar .navbar-content > * {
+  width: 100%;
+  padding: 10px 10px;
+  margin: 0;
+  border-radius: 5px;
+}
+.home-navbar .navbar-content > *:hover {
+  background-color: rgba(128, 128, 128, 0.2);
+  cursor: pointer;
+}
+
+.home-navbar .navbar-userdetail {
+  padding-top: 9px;
+  margin-top: 12px;
+  border-top: 1px solid rgba(149, 149, 149, 0.5);
+}
+.user-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+}
+.user-profile:hover {
+  background-color: rgba(128, 128, 128, 0.2);
+  cursor: pointer;
+}
+.user-profile .user-img {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  border-radius: 25%;
+}
+
+.createUser-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.createUser-container > div {
+  width: 330px;
+  background-color: rgba(250, 250, 250, 5%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  padding: 15px 0;
+  border-radius: 7px;
+}
+
+/* ---------ToDo----------- */
+.main-div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.Headers {
+  text-align: center;
+  margin-bottom: 11px;
+  font-size: large;
+  font-weight: bold;
+}
+.add-list {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+.add-list > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-div > .showItems {
+  width: 100%;
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+}
+
+.Item {
+  width: calc(100vw - 24px);
+  max-width: 330px;
+  border-radius: 5px;
+  margin: 8px;
+  padding: 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+.Item:hover {
+  border: 1px solid rgb(0, 70, 74);
+}
+
+.Item .todo-title-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding-bottom: 10px;
+  text-transform: capitalize;
+  justify-content: space-between;
+}
+.todo-title-container .todotitle {
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+}
+.itemButtons {
+  display: flex;
+}
+.itemButtons > * {
+  color: unset;
+}
+
+.todo-details {
+  width: 100%;
+  text-align: left;
+  word-break: break-word;
+}
+
+.btn-delete {
+  position: relative;
+  padding: 0;
+  top: 3px;
+  margin-left: 5px;
+}
+.btn-delete:hover {
+  cursor: pointer;
+  color: rgb(0, 122, 114);
+}
+.btn-edit {
+  position: relative;
+  padding: 0;
+  top: 3px;
+  margin-left: 5px;
+}
+.btn-edit:hover {
+  cursor: pointer;
+  color: rgb(0, 122, 114);
+}
+
+@media screen and (min-width: 1200px) {
+  .main-div > .showItems {
+    grid-template-columns: repeat(3, auto);
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .main-div > .showItems {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+@media screen and (max-width: 991px) {
+  .main-div > .showItems {
+    grid-template-columns: repeat(1, auto);
+  }
+}
