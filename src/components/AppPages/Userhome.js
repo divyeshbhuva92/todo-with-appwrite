@@ -3,13 +3,23 @@ import { Paper } from "@mantine/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { databases } from "../../appwriteConfig";
+import { account, databases } from "../../appwriteConfig";
 
 const Userhome = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [itemList, setItemList] = useState([]);
+  const [currentUserTodo, setCurrentUserTodo] = useState([]);
+
+  const [userID, setUserID] = useState("");
+
+  useEffect(() => {
+    const getUser = account.get();
+    getUser.then(function (response) {
+      // console.log(response.$id);
+      setUserID(response.$id);
+    });
+  }, []);
 
   // fetch todo -------------------------------------------------------------------
   useEffect(() => {
@@ -19,10 +29,12 @@ const Userhome = () => {
     );
 
     getTodos.then((res) => {
-      setItemList(res.documents);
-      // console.log(res.documents.forEach((doc) => console.log(doc.$id)));
+      setCurrentUserTodo(res.documents);
     });
   }, [location]);
+
+  const itemList = currentUserTodo.filter((doc) => doc.user_id === userID);
+  // console.log(itemList);
 
   const handleEdit = (id) => {
     navigate(`/users/edit-todo/${id}`);

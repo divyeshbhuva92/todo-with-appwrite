@@ -10,18 +10,29 @@ import {
   Image,
   Loader,
 } from "@mantine/core";
-import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { account, userAvtarResult } from "../appwriteConfig";
 import LightDarkMode from "./LightDarkMode";
 import Userhome from "./AppPages/Userhome";
 import CreateTodo from "./AppPages/TodoComponent/CreateTodo";
 import EditTodo from "./AppPages/TodoComponent/EditTodo";
-import UpdateUser from "./AppPages/TodoComponent/UpdateUser";
+import UpdateName from "./AppPages/TodoComponent/UpdateName";
+import UpdateEmail from "./AppPages/TodoComponent/UpdateEmail";
+import UpdatePwd from "./AppPages/TodoComponent/UpdatePwd";
 
 export default function Home() {
   const { todoID } = useParams;
   const navigate = useNavigate();
   const theme = useMantineTheme();
+  const location = useLocation();
+
   const [opened, setOpened] = useState(false);
 
   const [isLoading, setIsLoading] = useState();
@@ -48,7 +59,7 @@ export default function Home() {
     );
 
     setIsLoading(false);
-  }, []);
+  }, [location.pathname]);
 
   const userSignOut = async () => {
     try {
@@ -60,8 +71,7 @@ export default function Home() {
   };
 
   userAvtarResult.username = username;
-  // console.log(userAvatarObj);
-  //
+
   if (isLoading === true) {
     <Loader variant="bars" />;
   } else {
@@ -122,8 +132,18 @@ export default function Home() {
                         <Text component={Link} varient="link" to="create-todo">
                           Create Todo
                         </Text>
-                        <Text component={Link} varient="link" to="deleteUser">
-                          Delete Account
+                        <Text component={Link} varient="link" to="username">
+                          Change Username
+                        </Text>
+                        <Text component={Link} varient="link" to="userdetails">
+                          Change User Email
+                        </Text>
+                        <Text
+                          component={Link}
+                          varient="link"
+                          to="change-password"
+                        >
+                          Change Password
                         </Text>
 
                         <Text onClick={userSignOut}>Sign Out</Text>
@@ -144,7 +164,9 @@ export default function Home() {
                   <Route path="home" element={<Userhome todoid={todoID} />} />
                   <Route path="create-todo" element={<CreateTodo />} />
                   <Route path="edit-todo/:todoID" element={<EditTodo />} />
-                  <Route path="deleteUser" element={<UpdateUser />} />
+                  <Route path="username" element={<UpdateName />} />
+                  <Route path="userdetails" element={<UpdateEmail />} />
+                  <Route path="change-password" element={<UpdatePwd />} />
                 </Routes>
               </AppShell>
             </div>

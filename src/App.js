@@ -1,5 +1,6 @@
 import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
+import { NotificationsProvider } from "@mantine/notifications";
 import LoginPage from "./components/login/LoginPage";
 import Home from "./components/Home";
 import AddUser from "./components/login/AddUser";
@@ -28,6 +29,7 @@ function App() {
             withGlobalStyles
             withNormalizeCSS
           >
+            <NotificationsProvider />
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/signup" element={<AddUser />} />

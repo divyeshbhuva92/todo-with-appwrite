@@ -62,7 +62,7 @@ export default function EditTodo() {
 
       newTodo.then(
         (res) => {
-          console.log(res);
+          // console.log(res);
         },
         (err) => {
           console.log(err.message);

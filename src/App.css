@@ -220,6 +220,17 @@
   color: rgb(0, 122, 114);
 }
 
+.change-pwd-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.change-pwd-container > div {
+  width: 300px;
+}
+
+/* ---------media query ---------------------------- */
+
 @media screen and (min-width: 1200px) {
   .main-div > .showItems {
     grid-template-columns: repeat(3, auto);

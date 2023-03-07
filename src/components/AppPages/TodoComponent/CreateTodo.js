@@ -1,7 +1,7 @@
 import { Box, Button, Group, Textarea, TextInput } from "@mantine/core";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
-import { databases } from "../../../appwriteConfig";
+import { useEffect, useState } from "react";
+import { account, databases } from "../../../appwriteConfig";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateTodo() {
@@ -12,6 +12,22 @@ export default function CreateTodo() {
 
   const [titleErr, setTitleErr] = useState("");
   const [descErr, setDescErr] = useState("");
+
+  const [userID, setUserID] = useState("");
+
+  useEffect(() => {
+    const getUser = account.get();
+    getUser.then(
+      function (response) {
+        // console.log(response.$id);
+        setUserID(response.$id);
+      },
+      function (error) {
+        console.log(error.message);
+        // setReloginError("redirect to login");
+      }
+    );
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,12 +49,15 @@ export default function CreateTodo() {
         "63f88d3cd3f574472792",
         uuidv4(),
         {
+          user_id: userID,
           title: title,
           description: description,
         }
       );
 
-      // newTodo.then((res) => console.log(res));
+      newTodo.then((res) => {
+        // console.log(res);
+      });
       setTimeout(() => {
         navigate("/users/home");
       }, 400);
@@ -46,7 +65,7 @@ export default function CreateTodo() {
   };
 
   return (
-    <div className="todoinput-removeall">
+    <div className="todoinputs">
       <div className="add-list">
         <Box sx={{ maxWidth: 300 }} mx="auto">
           <form>
