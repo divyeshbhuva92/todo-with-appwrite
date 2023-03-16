@@ -14,8 +14,9 @@ function App() {
   });
 
   // ----------------------- toggle themes --------------------------------
-  const toggleColorScheme = () =>
+  const toggleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
+  };
 
   return (
     <Router>

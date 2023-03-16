@@ -79,7 +79,7 @@ function DeleteUser() {
     <div className="user-detail-container">
       <Box sx={{ maxWidth: 300 }} mx="auto">
         <form>
-          <div className="Headers">Update User Details</div>
+          <div className="Headers">Update Email</div>
 
           <div className="add-email">
             <TextInput

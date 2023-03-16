@@ -18,8 +18,8 @@ export default function EditTodo() {
   // get the current todo details ---------------------------------
   useEffect(() => {
     const getData = databases.getDocument(
-      "63f88d27c0c0c0e90da0",
-      "63f88d3cd3f574472792",
+      "6409d0710846c3cefc3c",
+      "6409d08a12c042ab6d80",
       currentTodoID
     );
 
@@ -51,8 +51,8 @@ export default function EditTodo() {
 
     if (title !== "" && description.length >= 10) {
       const newTodo = databases.updateDocument(
-        "63f88d27c0c0c0e90da0",
-        "63f88d3cd3f574472792",
+        "6409d0710846c3cefc3c",
+        "6409d08a12c042ab6d80",
         currentTodoID,
         {
           title: title,
@@ -69,7 +69,7 @@ export default function EditTodo() {
         }
       );
       setTimeout(() => {
-        navigate("/users/home");
+        navigate("/users/todohome");
       }, 400);
     }
   };

@@ -46,7 +46,7 @@ function DeleteUser() {
           title: "Username",
           message: "Username has been updated successfully!",
         });
-        navigate("/users/home");
+        navigate("/users/todohome");
       })
       .catch(function (error) {
         console.log(error);
@@ -57,7 +57,7 @@ function DeleteUser() {
     <div className="user-detail-container">
       <Box sx={{ maxWidth: 300 }} mx="auto">
         <form>
-          <div className="Headers">Update User Details</div>
+          <div className="Headers">Update Username</div>
           <div className="add-title">
             <TextInput
               withAsterisk

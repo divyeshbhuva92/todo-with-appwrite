@@ -61,6 +61,8 @@ export default function UpdateUserPwd() {
   return (
     <div className="change-pwd-container">
       <div>
+        <div className="Headers">Update Password</div>
+
         <PasswordInput
           withAsterisk
           label="Old password"

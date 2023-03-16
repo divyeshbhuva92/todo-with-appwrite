@@ -16,11 +16,10 @@
   right: 15px;
   padding: 0;
 }
-.HeaderContainer .swithTheme-btn {
-  height: fit-content;
-  width: fit-content;
-  position: absolute;
-  right: 16px;
+.HeaderContainer {
+  width: 100%;
+  padding: 0 14px 0 20px;
+  justify-content: space-between;
 }
 
 .login-comp {
@@ -66,23 +65,48 @@
   flex-direction: column;
   overflow-y: scroll;
 }
-.home-navbar .navbar-content > * {
+.navbar-content > .navbar-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
-  padding: 10px 10px;
+  padding: 8px 8px 8px 30px;
   margin: 0;
-  border-radius: 5px;
-}
-.home-navbar .navbar-content > *:hover {
-  background-color: rgba(128, 128, 128, 0.2);
-  cursor: pointer;
 }
 
-.home-navbar .navbar-userdetail {
-  padding-top: 9px;
-  margin-top: 12px;
-  border-top: 1px solid rgba(149, 149, 149, 0.5);
+.navbar-content > .navbar-options:first-child {
+  padding: 8px 8px 8px 20px;
+  margin-top: 10px;
+}
+.navbar-options-titles {
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(100, 100, 100, 0.25) 20%,
+    transparent
+  );
+  border-radius: 0;
+  padding: 5px 10px 5px 20px;
+  margin-top: 15px;
+  font-size: 14px;
+}
+.navbar-content > .navbar-options:hover {
+  color: rgb(25, 113, 194);
+  cursor: pointer;
+}
+.navbar-userdetail {
+  width: 100%;
+  height: fit-content;
+  position: absolute;
+  bottom: 0;
+}
+.navbar-userdetail:hover {
+  background: linear-gradient(180deg, rgba(100, 100, 100, 0.25), transparent);
+  border-color: transparent;
+  cursor: pointer;
 }
 .user-profile {
+  bottom: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -90,19 +114,34 @@
   gap: 10px;
   font-size: 16px;
   font-weight: 500;
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
+  margin: 20px;
+  box-sizing: border-box;
+  border-radius: 0;
+  background-color: unset;
 }
-.user-profile:hover {
-  background-color: rgba(128, 128, 128, 0.2);
-  cursor: pointer;
-}
-.user-profile .user-img {
+
+.user-img {
   width: 30px;
   height: 30px;
   overflow: hidden;
-  border-radius: 25%;
+  border-radius: 20%;
+}
+
+.menu-items {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 10px;
+  background-color: unset;
+}
+.menu-items:hover {
+  cursor: pointer;
+}
+.menu-items:hover > .menu-icon {
+  color: rgb(25, 113, 194);
+}
+.menu-icon {
+  margin-right: 10px;
 }
 
 .createUser-container {
@@ -119,9 +158,29 @@
   padding: 15px 0;
   border-radius: 7px;
 }
+/* ----------------------- */
+.main-div {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.main-app-btn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.app-btn {
+  font-size: 17px;
+  width: 150px;
+  max-width: 200px;
+}
 
 /* ---------ToDo----------- */
-.main-div {
+.main-todo-div {
   width: 100%;
   height: 100%;
   display: flex;
@@ -148,7 +207,7 @@
   flex-direction: column;
 }
 
-.main-div > .showItems {
+.main-todo-div > .showItems {
   width: 100%;
   display: grid;
   margin: 0;
@@ -229,20 +288,178 @@
   width: 300px;
 }
 
+/* ------------------------ */
+.contacthome-container {
+  height: 100%;
+  width: 100%;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.contact {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  width: 80%;
+  max-width: 780px;
+  min-height: 90px;
+  max-height: fit-content;
+  margin-bottom: 15px;
+}
+.contact-imgand-name {
+  display: flex;
+  flex-direction: row;
+}
+.contact-img {
+  position: relative;
+  display: block;
+  min-height: 60px;
+  min-width: 60px;
+  border-radius: 50%;
+  overflow-x: hidden;
+}
+.contact-name,
+.contact-mobile {
+  font-size: 18px;
+  margin-left: 15px;
+}
+.contact-name {
+  font-weight: 700;
+}
+.contact-btns {
+  display: flex;
+  flex-direction: row;
+}
+
+.contact-modify-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: 7px;
+  padding: 7px;
+  margin: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.info {
+  padding: 0px;
+}
+.edit:hover {
+  color: #228be6;
+  cursor: pointer;
+}
+.delete:hover {
+  color: #f03e3e;
+  cursor: pointer;
+}
+/* -------------------------------------------- */
+.contact-info-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.contact-info-div {
+  width: 410px;
+  height: 100%;
+  height: inherit;
+}
+.contact-info-paper {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 15px 15px 7px 15px;
+  margin-bottom: 15px;
+}
+.contact-info-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+.contact-info-text {
+  font-size: 18px;
+  width: fit-content;
+}
+.contact-details {
+  display: grid;
+  grid-template-columns: 3fr 0.5fr 6fr;
+  margin-bottom: 10px;
+}
+.keys {
+  font-weight: 600;
+  /* background-color: #f03e3e; */
+}
+.seperator-col {
+  padding-left: 5px;
+  /* background-color: black; */
+}
+.vals {
+  font-weight: normal;
+  padding-left: 5px;
+  /* background-color: sienna; */
+}
+
+.QR {
+  height: 180px;
+  width: 180px;
+  padding: 5px;
+  margin-bottom: 7px;
+  background-color: white;
+}
+.qr-download-btn {
+  margin-top: 5px;
+  margin-bottom: 6px;
+}
+
 /* ---------media query ---------------------------- */
 
 @media screen and (min-width: 1200px) {
-  .main-div > .showItems {
+  .main-todo-div > .showItems {
     grid-template-columns: repeat(3, auto);
   }
 }
 @media screen and (min-width: 992px) and (max-width: 1199px) {
-  .main-div > .showItems {
+  .main-todo-div > .showItems {
     grid-template-columns: repeat(2, auto);
   }
 }
 @media screen and (max-width: 991px) {
-  .main-div > .showItems {
+  .main-todo-div > .showItems {
     grid-template-columns: repeat(1, auto);
+  }
+}
+@media screen and (max-width: 500px) {
+  .contact {
+    flex-direction: column;
+    width: 95%;
+  }
+  .contact-imgand-name {
+    width: 100%;
+  }
+  .keys,
+  .vals {
+    font-size: 17px;
+  }
+
+  .contact-btns {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .contact-modify-btn {
+    padding: 0;
+    background-color: unset;
+    border-radius: 7px;
+    margin: 7px 10px 0 10px;
   }
 }

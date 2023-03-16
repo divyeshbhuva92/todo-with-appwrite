@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-// var API = "https://63e4f4ce8e1ed4ccf6ea0b09.mockapi.io/api";
-
 function AddUser() {
   const navigate = useNavigate();
 
@@ -32,15 +30,10 @@ function AddUser() {
     );
 
     newuser
-      .then(
-        function (response) {
-          // console.log(response);
-          navigate("/");
-        },
-        function (err) {
-          console.log("err while getting response: " + err);
-        }
-      )
+      .then((response) => {
+        // console.log(response);
+        navigate("/");
+      })
       .catch((err) => console.log(err));
   };
 

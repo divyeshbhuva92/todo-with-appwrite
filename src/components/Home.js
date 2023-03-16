@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, Route, Routes, useLocation, useParams } from "react-router-dom";
 import {
   AppShell,
   Navbar,
@@ -7,29 +8,31 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
-  Image,
   Loader,
 } from "@mantine/core";
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import { account, userAvtarResult } from "../appwriteConfig";
+import { account } from "../appwriteConfig";
 import LightDarkMode from "./LightDarkMode";
+import NavbarContent from "./NavbarContent";
+
+// ----------------------------Contacts---------------------------------
+import CreateContact from "./AppPages/ContactComponent/CreateContact";
+import EditContact from "./AppPages/ContactComponent/EditContact";
+import ViewContact from "./AppPages/ContactComponent/ViewContact";
+
+// ------------------------------todos----------------------------------
 import Userhome from "./AppPages/Userhome";
+import TodoHome from "./AppPages/TodoComponent/TodoHome";
 import CreateTodo from "./AppPages/TodoComponent/CreateTodo";
 import EditTodo from "./AppPages/TodoComponent/EditTodo";
 import UpdateName from "./AppPages/TodoComponent/UpdateName";
 import UpdateEmail from "./AppPages/TodoComponent/UpdateEmail";
 import UpdatePwd from "./AppPages/TodoComponent/UpdatePwd";
+import ContactHome from "./AppPages/ContactComponent/ContactHome";
 
 export default function Home() {
-  const { todoID } = useParams;
-  const navigate = useNavigate();
+  const { todoID } = useParams();
+  const { contactID } = useParams();
+
   const theme = useMantineTheme();
   const location = useLocation();
 
@@ -46,31 +49,22 @@ export default function Home() {
 
     const getData = account.get();
 
-    getData.then(
-      function (response) {
-        setUserDetails(response);
-        // console.log(response);
-        setUsername(response.name.toUpperCase());
-      },
-      function (error) {
-        // console.log(error.message);
-        setReloginError("redirect to login");
-      }
-    );
+    getData
+      .then(
+        (response) => {
+          setUserDetails(response);
+          setUsername(response.name.toUpperCase());
+        },
+        (error) => {
+          setReloginError("redirect to login");
+        }
+      )
+      .catch((error) => {
+        console.log(error);
+      });
 
     setIsLoading(false);
   }, [location.pathname]);
-
-  const userSignOut = async () => {
-    try {
-      await account.deleteSession("current");
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  userAvtarResult.username = username;
 
   if (isLoading === true) {
     <Loader variant="bars" />;
@@ -90,7 +84,7 @@ export default function Home() {
                   },
                 }}
                 header={
-                  <Header height={{ base: 50, md: 60 }} p="sm">
+                  <Header height={{ base: 50, md: 60 }}>
                     <div
                       className="HeaderContainer"
                       style={{
@@ -119,53 +113,37 @@ export default function Home() {
                 navbarOffsetBreakpoint="sm"
                 navbar={
                   <Navbar
-                    p="sm"
                     hiddenBreakpoint="sm"
                     hidden={!opened}
-                    width={{ sm: 200, lg: 250 }}
+                    width={{ sm: 220, lg: 250 }}
                   >
-                    <div className="home-navbar">
-                      <div className="navbar-content">
-                        <Text component={Link} varient="link" to="home">
-                          Home
-                        </Text>
-                        <Text component={Link} varient="link" to="create-todo">
-                          Create Todo
-                        </Text>
-                        <Text component={Link} varient="link" to="username">
-                          Change Username
-                        </Text>
-                        <Text component={Link} varient="link" to="userdetails">
-                          Change User Email
-                        </Text>
-                        <Text
-                          component={Link}
-                          varient="link"
-                          to="change-password"
-                        >
-                          Change Password
-                        </Text>
-
-                        <Text onClick={userSignOut}>Sign Out</Text>
-                      </div>
-                      <div className="navbar-userdetail">
-                        <div className="user-profile">
-                          <div className="user-img">
-                            <Image src={userAvtarResult.href} />
-                          </div>
-                          <p>{username}</p>
-                        </div>
-                      </div>
-                    </div>
+                    <NavbarContent />
                   </Navbar>
                 }
               >
                 <Routes>
-                  <Route path="home" element={<Userhome todoid={todoID} />} />
+                  <Route path="home" element={<Userhome />} />
+
+                  <Route
+                    path="todohome"
+                    element={<TodoHome todoid={todoID} />}
+                  />
                   <Route path="create-todo" element={<CreateTodo />} />
                   <Route path="edit-todo/:todoID" element={<EditTodo />} />
-                  <Route path="username" element={<UpdateName />} />
-                  <Route path="userdetails" element={<UpdateEmail />} />
+
+                  <Route
+                    path="contact-home"
+                    element={<ContactHome contactid={contactID} />}
+                  />
+                  <Route path="create-contact" element={<CreateContact />} />
+                  <Route
+                    path="edit-contact/:contactID"
+                    element={<EditContact />}
+                  />
+                  <Route path="/:contactID" element={<ViewContact />} />
+
+                  <Route path="change-username" element={<UpdateName />} />
+                  <Route path="change-email" element={<UpdateEmail />} />
                   <Route path="change-password" element={<UpdatePwd />} />
                 </Routes>
               </AppShell>
