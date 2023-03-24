@@ -1,5 +1,6 @@
 import { ActionIcon, useMantineColorScheme } from "@mantine/core";
-import { IconMoon, IconSun } from "@tabler/icons";
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export default function LightDarkMode() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -13,7 +14,7 @@ export default function LightDarkMode() {
         onClick={() => toggleColorScheme()}
         title="Swith Theme"
       >
-        {dark ? <IconSun size={18} /> : <IconMoon size={18} />}
+        {dark ? <LightModeIcon size={18} /> : <DarkModeIcon size={18} />}
       </ActionIcon>
     </div>
   );

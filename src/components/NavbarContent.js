@@ -1,15 +1,15 @@
 import { Image, Menu, Paper, Text } from "@mantine/core";
-import {
-  IconAddressBook,
-  IconBallpen,
-  IconEdit,
-  IconHome,
-  IconMail,
-  IconNote,
-  IconPassword,
-  IconPower,
-  IconTextPlus,
-} from "@tabler/icons";
+
+import HomeIcon from '@mui/icons-material/Home';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import ContactsIcon from '@mui/icons-material/Contacts';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import EditIcon from '@mui/icons-material/Edit';
+import EmailIcon from '@mui/icons-material/Email';
+import PasswordIcon from '@mui/icons-material/Password';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { account, userAvtarResult } from "../appwriteConfig";
@@ -50,11 +50,11 @@ export default function NavbarContent() {
           varient="link"
           to="home"
         >
-          <IconHome size={15} /> Home
+          <HomeIcon fontSize="small" /> Home
         </Paper>
 
         <Paper className="navbar-options-titles">
-          <IconNote size={15} /> Todos
+          <StickyNote2Icon fontSize="small" /> Todos
         </Paper>
 
         <Paper
@@ -63,11 +63,11 @@ export default function NavbarContent() {
           varient="link"
           to="create-todo"
         >
-          <IconEdit size={15} /> Add Todo
+          <NoteAddIcon fontSize="small" /> Add Todo
         </Paper>
 
         <Paper className="navbar-options-titles">
-          <IconAddressBook size={15} /> Contact Book
+          <ContactsIcon fontSize="small" /> Contact Book
         </Paper>
 
         <Paper
@@ -76,7 +76,7 @@ export default function NavbarContent() {
           varient="link"
           to="create-contact"
         >
-          <IconTextPlus size={15} /> Add Contact
+          <PersonAddIcon fontSize="small" /> Add Contact
         </Paper>
       </div>
 
@@ -104,7 +104,7 @@ export default function NavbarContent() {
 
           <Menu.Dropdown className="menu-dropdown">
             <Paper className="menu-items">
-              <IconBallpen className="menu-icon" size={14} />
+              <EditIcon className="menu-icon" fontSize="small" />
               <Text
                 className="menu-text"
                 component={Link}
@@ -116,7 +116,7 @@ export default function NavbarContent() {
             </Paper>
 
             <Paper className="menu-items">
-              <IconMail className="menu-icon" size={14} />
+              <EmailIcon className="menu-icon" fontSize="small" />
               <Text
                 className="menu-text"
                 component={Link}
@@ -128,7 +128,7 @@ export default function NavbarContent() {
             </Paper>
 
             <Paper className="menu-items">
-              <IconPassword className="menu-icon" size={14} />
+              <PasswordIcon className="menu-icon" fontSize="small" />
               <Text
                 className="menu-text"
                 component={Link}
@@ -140,7 +140,7 @@ export default function NavbarContent() {
             </Paper>
 
             <Paper className="menu-items">
-              <IconPower className="menu-icon" size={14} />
+              <PowerSettingsNewIcon  className="menu-icon" fontSize="small" />
               <Text className="menu-text" onClick={userSignOut}>
                 Sign Out
               </Text>

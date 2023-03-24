@@ -79,6 +79,10 @@
   margin-top: 10px;
 }
 .navbar-options-titles {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
   width: 100%;
   background: linear-gradient(
     180deg,
@@ -210,9 +214,8 @@
 .main-todo-div > .showItems {
   width: 100%;
   display: grid;
-  margin: 0;
-  padding: 0;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
   justify-content: center;
 }
 
@@ -424,11 +427,7 @@
 
 /* ---------media query ---------------------------- */
 
-@media screen and (min-width: 1200px) {
-  .main-todo-div > .showItems {
-    grid-template-columns: repeat(3, auto);
-  }
-}
+
 @media screen and (min-width: 992px) and (max-width: 1199px) {
   .main-todo-div > .showItems {
     grid-template-columns: repeat(2, auto);

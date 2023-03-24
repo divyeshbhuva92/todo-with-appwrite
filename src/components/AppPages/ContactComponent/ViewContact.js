@@ -1,9 +1,8 @@
 import { Avatar, Button, Group, Image, Paper, Text } from "@mantine/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { avatars, databases } from "../../../appwriteConfig";
-import { IconArrowBack } from "@tabler/icons";
+import CoPresentIcon from '@mui/icons-material/CoPresent';
 
 export default function ContactHome() {
   const navigate = useNavigate();
@@ -131,7 +130,7 @@ END:VCARD
 
         <Group position="center">
           <Button
-            leftIcon={<IconArrowBack />}
+            leftIcon={<CoPresentIcon />}
             variant="gradient"
             gradient={{ from: `#087f5b`, to: "blue", deg: 220 }}
             onClick={() => navigate("/users/contact-home")}

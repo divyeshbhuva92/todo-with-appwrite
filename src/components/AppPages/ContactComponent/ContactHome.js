@@ -4,7 +4,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useState } from "react";
 import { account, databases } from "../../../appwriteConfig";
-import { IconInfoCircle } from "@tabler/icons";
+import InfoIcon from '@mui/icons-material/Info';
 
 export default function ContactHome() {
   const theme = useMantineTheme();
@@ -132,7 +132,7 @@ export default function ContactHome() {
                     varient="link"
                     to={`/users/${elem.$id}`}
                   >
-                    <IconInfoCircle />
+                    <InfoIcon  />
                   </Paper>
                 </div>
               </Paper>
