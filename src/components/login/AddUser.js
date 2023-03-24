@@ -30,8 +30,7 @@ function AddUser() {
     );
 
     newuser
-      .then((response) => {
-        // console.log(response);
+      .then(() => {
         navigate("/");
       })
       .catch((err) => console.log(err));

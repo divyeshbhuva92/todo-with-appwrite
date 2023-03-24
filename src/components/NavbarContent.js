@@ -88,7 +88,7 @@ export default function NavbarContent() {
           position="top-start"
           offset={25}
           openDelay={100}
-          closeDelay={500000}
+          closeDelay={500}
         >
           <Menu.Target>
             <Paper className="user-profile">

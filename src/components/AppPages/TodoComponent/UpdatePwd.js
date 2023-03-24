@@ -34,9 +34,8 @@ export default function UpdateUserPwd() {
     const updatePwd = account.updatePassword(newPwd, oldPwd);
 
     updatePwd
-      .then(function (response) {
+      .then( ()=> {
         setIsPwdChange(true);
-        // console.log(response);
       })
       .then(async function () {
         await account.deleteSession("current");
@@ -69,11 +68,9 @@ export default function UpdateUserPwd() {
           placeholder="Enter old password here"
           visible={visible}
           onVisibilityChange={toggle}
-          // value={userPassword}
           error={oldPwdErr}
           onFocus={() => setOldPwdErr("")}
           onChange={(e) => {
-            // console.log(e.target.value);
             setOldPwd(e.target.value);
           }}
         />
@@ -84,11 +81,9 @@ export default function UpdateUserPwd() {
           placeholder="Enter New password here"
           visible={visible}
           onVisibilityChange={toggle}
-          // value={userPassword}
           error={newPwdErr}
           onFocus={() => setNewPwdErr("")}
           onChange={(e) => {
-            // console.log(e.target.value);
             setNewPwd(e.target.value);
           }}
         />

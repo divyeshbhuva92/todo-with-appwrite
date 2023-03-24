@@ -25,7 +25,6 @@ export default function EditTodo() {
 
     getData.then(
       (response) => {
-        // console.log(response);
         setTitle(response.title);
         setDescription(response.description);
       },

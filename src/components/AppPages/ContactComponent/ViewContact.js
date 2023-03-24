@@ -27,7 +27,6 @@ export default function ContactHome() {
 
     getContactInfo
       .then((res) => {
-        // console.log(res);
         setCurrentContact(res);
         setUserAddress(res.location);
       })
@@ -57,6 +56,7 @@ export default function ContactHome() {
 
     setQRData({ ...currentContact, location: UserLocation });
   }, [userAddress]);
+
 
   const createQR = avatars.getQR(
     `BEGIN:VCARD

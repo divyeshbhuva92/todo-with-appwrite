@@ -164,10 +164,10 @@ export default function CreateContact() {
   useEffect(() => {
     const getUser = account.get();
     getUser.then(
-      function (response) {
+      (response)=> {
         setUserID(response.$id);
       },
-      function (error) {
+      (error) => {
         console.log(error.message);
       }
     );
@@ -244,7 +244,6 @@ export default function CreateContact() {
 
       createCntct
         .then((res) => {
-          // console.log(res);
           navigate("/users/contact-home");
         })
         .catch((error) => console.log(error));

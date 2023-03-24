@@ -19,12 +19,10 @@ export default function CreateTodo() {
     const getUser = account.get();
     getUser.then(
       function (response) {
-        // console.log(response.$id);
         setUserID(response.$id);
       },
       function (error) {
         console.log(error.message);
-        // setReloginError("redirect to login");
       }
     );
   }, []);

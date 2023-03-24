@@ -49,7 +49,6 @@ export default function LoginPage() {
       await account.createEmailSession(user.email, user.password);
       navigate("/users/home");
     } catch (error) {
-      // console.log(error.message);
       if (
         error.message ===
           "Invalid email: Value must be a valid email address" ||
@@ -65,9 +64,9 @@ export default function LoginPage() {
       }
     }
 
-    // if (errMessage !== "") {
-    //   console.log(errMessage);
-    // }
+    if (errMessage !== "") {
+      console.log(errMessage);
+    }
   };
 
   return (

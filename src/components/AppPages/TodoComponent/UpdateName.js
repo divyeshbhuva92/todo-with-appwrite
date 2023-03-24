@@ -14,7 +14,6 @@ function DeleteUser() {
     const getCurrentUserDetails = account.get();
     getCurrentUserDetails.then(
       (response) => {
-        // console.log(response);
         setCurrentUserName(response.name);
       },
       (error) => {

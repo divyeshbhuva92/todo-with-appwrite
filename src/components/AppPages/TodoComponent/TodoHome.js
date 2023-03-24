@@ -37,7 +37,6 @@ const Userhome = () => {
 
     getTodos
       .then((res) => {
-        // console.log(res.documents);
         setCurrentUserTodo(res.documents);
       })
       .catch((error) => {

@@ -52,7 +52,6 @@ export default function EditContact() {
     getData
       .then(
         (response) => {
-          // console.log(response);
           setNewContact({
             user_id: response.user_id,
             user_img: response.user_img,

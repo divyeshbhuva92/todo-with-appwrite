@@ -40,7 +40,6 @@ function DeleteUser() {
     updateUserEmail
       .then(function (response) {
         setIsEmailUpdated(true);
-        // console.log(response);
       })
       .then(async function () {
         await account.deleteSession("current");
