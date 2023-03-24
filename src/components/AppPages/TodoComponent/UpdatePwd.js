@@ -14,7 +14,6 @@ export default function UpdateUserPwd() {
   const [newPwd, setNewPwd] = useState("");
   const [newPwdErr, setNewPwdErr] = useState("");
 
-  const [isPwdChange, setIsPwdChange] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,9 +33,6 @@ export default function UpdateUserPwd() {
     const updatePwd = account.updatePassword(newPwd, oldPwd);
 
     updatePwd
-      .then( ()=> {
-        setIsPwdChange(true);
-      })
       .then(async function () {
         await account.deleteSession("current");
         showNotification({

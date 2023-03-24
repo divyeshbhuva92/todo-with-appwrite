@@ -16,7 +16,6 @@ function DeleteUser() {
   const [userPassword, setUserPassword] = useState("");
   const [userPasswordErr, setUserPasswordErr] = useState("");
 
-  const [isEmailUpdated, setIsEmailUpdated] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,9 +37,6 @@ function DeleteUser() {
     const updateUserEmail = account.updateEmail(userEmail, userPassword);
 
     updateUserEmail
-      .then(function (response) {
-        setIsEmailUpdated(true);
-      })
       .then(async function () {
         await account.deleteSession("current");
         showNotification({

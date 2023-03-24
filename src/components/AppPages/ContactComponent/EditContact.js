@@ -10,8 +10,7 @@ export default function EditContact() {
   const location = useLocation();
   const dbID = "6409d0710846c3cefc3c";
   const collID = "640afd331648e5db2c79";
-
-  // ------------------------------------------------------------------------
+  
 
   // ----------------------- for list of city, state & country  ----------------------------
   const [countryList, setCountryList] = useState([]);
