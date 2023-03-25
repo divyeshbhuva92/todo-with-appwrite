@@ -2,7 +2,8 @@ import { Box, Button, Group, Input, Select, TextInput } from "@mantine/core";
 import { account, databases } from "../../../appwriteConfig";
 import { City, Country, State } from "country-state-city";
 import { v4 as uuidv4 } from "uuid";
-import { useFormik } from 'formik';
+import { useFormik } from "formik";
+import * as yup from "yup";
 import { IMaskInput } from "react-imask";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,10 +16,10 @@ export default function CreateContact() {
 
   const [userID, setUserID] = useState("");
 
-  // ----------------------- for list of city, state & country  ----------------------------
+  // ----------------------- list of city, state & country  ----------------------------
   const [countryList, setCountryList] = useState([]);
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
 
   // ------------------------------- list of countries -------------------------------
   const countries = Country.getAllCountries();
@@ -36,49 +37,34 @@ export default function CreateContact() {
   const [currentCountry, setCurrentCountry] = useState([]);
   const [currentStCode, setCurrentStCode] = useState("");
 
-  // ----------------------- for empty state & city at change ------------------------------
-  const [currentStName, setCurrentStName] = useState("");
-  const [currentCtName, setCurrentCtName] = useState("");
+  // ----------------------- to empty state & city at change country -----------------------
 
-  // -------------------------------- for input errors -------------------------------------
-  const [firstnameerror, setFirstnameerror] = useState("");
-  const [lastnameerror, setLastnameerror] = useState("");
-  const [mobileErr, setMobileErr] = useState("");
-  const [emailErr, setEmailErr] = useState("");
-  const [addressErr, setAddressErr] = useState("");
+  function handleCountry(cnt) {
+    formik.setFieldValue("states", null);
+    formik.setFieldValue("city", null);
 
-  // -------------------------------------
-  const [newContact, setNewContact] = useState({
-    user_id: "",
-    user_img: "",
-    first_name: "",
-    last_name: "",
-    mobile_num: "",
-    email: "",
-    location: "",
-  });
-
-  function handleCountry(e) {
-    const filterCountry = countryList.filter((country) => country.value === e);
+    const filterCountry = countryList.filter(
+      (country) => country.value === cnt
+    );
     setCurrentCountry(filterCountry[0]);
-    setCurrentStName("");
-    setCurrentCtName("");
+    formik.setFieldValue("country", cnt);
   }
 
   // ------------------------------- get states of the country -------------------------------
 
-  function handleStates(e) {
-    const filterState = states.filter((s) => s.value === e);
-    setCurrentStName(filterState[0].value);
+  function handleStates(stt) {
+    formik.setFieldValue("city", null);
+
+    const filterState = stateList.filter((s) => s.value === stt);
     setCurrentStCode(filterState[0].statecode);
-    setCurrentCtName("");
+    formik.setFieldValue("states", stt);
   }
 
   function getlistofStates() {
     if (currentCountry.code !== "") {
       const statesOfCountry = State.getStatesOfCountry(currentCountry.code);
 
-      setStates(
+      setStateList(
         statesOfCountry.map((s) => ({
           label: s.name,
           value: s.name,
@@ -86,7 +72,7 @@ export default function CreateContact() {
         }))
       );
     } else {
-      setStates([]);
+      setStateList([]);
     }
   }
 
@@ -109,11 +95,11 @@ export default function CreateContact() {
         currentStCode
       );
 
-      setCities(
+      setCityList(
         citiesofState.map((ct) => ({ label: ct.name, value: ct.name }))
       );
     } else {
-      setCities([]);
+      setCityList([]);
     }
   }
 
@@ -123,14 +109,11 @@ export default function CreateContact() {
     } catch (error) {
       console.log(error);
     }
-  }, [currentStName]);
+  }, [currentStCode]);
 
-  function handleCity(e) {
-    setCurrentCtName(e);
-  }
-
-  // ------------------------------ get contacts collection -----------------------------------
+  // ------------------------------ get contacts collection & filter it userwise -----------------------------------
   const [contacts, setContacts] = useState([]);
+  const [currUserCntList, setCurrUserCntList] = useState([]);
 
   useEffect(() => {
     const getContacts = databases.listDocuments(dbID, collID);
@@ -144,9 +127,6 @@ export default function CreateContact() {
       });
   }, []);
 
-  // ------------------------------ filter contacts per user -----------------------------------
-
-  const [currUserCntList, setCurrUserCntList] = useState([]);
   useEffect(() => {
     const currCntList = contacts.filter((doc) => doc.user_id === userID);
     setCurrUserCntList(currCntList);
@@ -155,17 +135,9 @@ export default function CreateContact() {
   // ------------------------------- submit details -------------------------------
 
   useEffect(() => {
-    setNewContact({
-      ...newContact,
-      location:
-        currentCtName + ", " + currentStName + ", " + currentCountry.label,
-    });
-  }, [currentCountry, currentStName, currentCtName]);
-
-  useEffect(() => {
     const getUser = account.get();
     getUser.then(
-      (response)=> {
+      (response) => {
         setUserID(response.$id);
       },
       (error) => {
@@ -174,205 +146,173 @@ export default function CreateContact() {
     );
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const contactValidSchema = yup.object({
+    first_name: yup
+      .string("Enter first name")
+      .min(3, "First name should be of minimum 3 characters length")
+      .required("First name is required"),
+    last_name: yup
+      .string("Enter last name")
+      .min(3, "Last name should be of minimum 3 characters length")
+      .required("Last name is required"),
+    mobile_num: yup
+      .string("Enter mobile number")
+      .min(11, "Mobile number should be of minimum 10 characters length")
+      .required("Mobile number is required"),
+    email: yup
+      .string("Enter your email")
+      .test("validEmail", "Enter valid email", (val) =>
+        /^\b[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b$/.test(val)
+      )
+      .required("Email is required"),
+    country: yup
+      .string("Enter last name")
+      .min(3, "Last name should be of minimum 3 characters length")
+      .required("Country is required"),
+  });
 
-    if (newContact.first_name === "" || newContact.first_name.length < 2) {
-      setFirstnameerror("First Name should be at least 3 character.");
-    } else {
-      setFirstnameerror("");
-    }
-
-    if (newContact.last_name === "" || newContact.last_name.length < 2) {
-      setLastnameerror("Last Name should be at least 3 character.");
-    } else {
-      setLastnameerror("");
-    }
-
-    if (newContact.mobile_num === "" || newContact.mobile_num.length < 11) {
-      setMobileErr("Mobile number should be at least 10 digit.");
-    } else {
-      setMobileErr("");
-    }
-
-    if (newContact.email === "") {
-      setEmailErr("Email should not be empty.");
-    } else if (
-      /^\b[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b$/.test(
-        newContact.email
-      ) === false
-    ) {
-      setEmailErr("Invalid email");
-    } else {
-      setEmailErr("");
-    }
-
-    if (newContact.location === ", , undefined" || newContact.location === "") {
-      setAddressErr("Please select location.");
-    } else {
-      setAddressErr("");
-    }
-
-    const matchedContact = currUserCntList.filter(
-      (cnt) => newContact.email === cnt.email
-    );
-    if (matchedContact.length >= 1) {
-      setEmailErr(
-        "Contact with this email is already exist. Please update it or enter another email."
-      );
-    } else {
-      setEmailErr("");
-    }
-
-    if (
-      newContact.first_name !== "" &&
-      newContact.last_name !== "" &&
-      newContact.mobile_num !== "" &&
-      newContact.email !== "" &&
-      newContact.location !== "" &&
-      newContact.location !== ", , undefined" &&
-      matchedContact.length === 0
-    ) {
+  const formik = useFormik({
+    initialValues: {
+      user_id: "",
+      user_img: "",
+      first_name: "",
+      last_name: "",
+      mobile_num: "",
+      email: "",
+      country: "",
+      states: "",
+      city: "",
+    },
+    validationSchema: contactValidSchema,
+    onSubmit: (val) => {
       const createCntct = databases.createDocument(dbID, collID, uuidv4(), {
+        ...val,
         user_id: userID,
-        user_img: newContact.user_img,
-        first_name: newContact.first_name,
-        last_name: newContact.last_name,
-        mobile_num: newContact.mobile_num,
-        email: newContact.email,
-        location: newContact.location,
       });
 
       createCntct
-        .then((res) => {
+        .then(() => {
           navigate("/users/contact-home");
         })
         .catch((error) => console.log(error));
-    } else return;
-  };
-
-  // ------------------------------- -------------------------------
+    },
+  });
 
   return (
     <div className="create-contact-container">
       <Box sx={{ maxWidth: 350 }} mx="auto">
         <div className="Headers">Create New Contact</div>
 
-        <div className="contact-names-input">
+        <form onSubmit={formik.handleSubmit}>
           <TextInput
             label="First Name"
-            mb="xs"
             withAsterisk
+            mb="xs"
             placeholder="First name"
-            title="First Name"
-            error={firstnameerror}
-            onFocus={() => setFirstnameerror("")}
-            onChange={(e) =>
-              setNewContact({ ...newContact, first_name: e.target.value })
+            name="first_name"
+            error={
+              formik.touched.first_name && formik.errors.first_name
+                ? formik.errors.first_name
+                : null
             }
+            onChange={formik.handleChange}
+            value={formik.values.first_name}
           />
+
           <TextInput
             label="Last Name"
-            mb="xs"
             withAsterisk
-            placeholder="Last name"
-            title="Last Name"
-            error={lastnameerror}
-            onFocus={() => setLastnameerror("")}
-            onChange={(e) =>
-              setNewContact({ ...newContact, last_name: e.target.value })
-            }
-          />
-
-          <TextInput
-            label="Profile Image"
             mb="xs"
-            placeholder="Profile Image"
-            title="Profile Image"
-            onChange={(e) =>
-              setNewContact({ ...newContact, user_img: e.target.value })
+            placeholder="Last name"
+            name="last_name"
+            error={
+              formik.touched.last_name && formik.errors.last_name
+                ? formik.errors.last_name
+                : null
             }
+            onChange={formik.handleChange}
+            value={formik.values.last_name}
           />
-        </div>
 
-        <div className="contact-numbers-input">
           <TextInput
             label="Mobile"
-            mb="xs"
             withAsterisk
+            mb="xs"
+            name="mobile_num"
             placeholder="00000 00000"
             component={IMaskInput}
             mask="00000 00000"
-            title="Mobile"
-            error={mobileErr}
-            onFocus={() => setMobileErr("")}
-            onChange={(e) =>
-              setNewContact({ ...newContact, mobile_num: e.target.value })
+            error={
+              formik.touched.mobile_num && formik.errors.mobile_num
+                ? formik.errors.mobile_num
+                : null
             }
+            onChange={formik.handleChange}
+            value={formik.values.mobile_num}
           />
-        </div>
 
-        <TextInput
-          label="Email Address"
-          mb="xs"
-          withAsterisk
-          placeholder="your@email.com"
-          title="Email"
-          error={emailErr}
-          onFocus={() => setEmailErr("")}
-          onChange={(e) =>
-            setNewContact({ ...newContact, email: e.target.value })
-          }
-        />
+          <TextInput
+            label="Email"
+            withAsterisk
+            mb="xs"
+            placeholder="your@email.com"
+            name="email"
+            error={
+              formik.touched.email && formik.errors.email
+                ? formik.errors.email
+                : null
+            }
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
 
-        <div className="contact-address-input">
-          <Input.Label required>Location :</Input.Label>
-          <Input.Description>Select city, state & country.</Input.Description>
-          <Input.Error>{addressErr}</Input.Error>
+          <div className="contact-address-input">
+            <Input.Label>Location :</Input.Label>
+            <Input.Description>Select city, state & country.</Input.Description>
 
-          <div className="contact-city">
             <Select
+              placeholder="Select country"
               label="Country"
-              title="Country"
-              searchable
-              nothingFound="Not found"
-              placeholder="select country"
-              onFocus={() => setAddressErr("")}
+              withAsterisk
+              mb="xs"
               dropdownComponent="div"
-              onChange={handleCountry}
+              error={
+                formik.touched.country && formik.errors.country
+                  ? formik.errors.country
+                  : null
+              }
               data={countryList}
+              onChange={handleCountry}
+              value={formik.values.country}
             />
 
             <Select
+              placeholder="Select state"
               label="State"
-              title="State"
-              searchable
-              nothingFound="Not found"
-              placeholder="select state"
-              value={currentStName}
+              mb="xs"
+              dropdownComponent="div"
+              data={stateList}
               onChange={handleStates}
-              data={states}
+              value={formik.values.states}
             />
 
             <Select
+              placeholder="Select city"
               label="City"
-              title="City"
-              searchable
-              nothingFound="Not found"
-              placeholder="select city"
-              value={currentCtName}
+              mb="xs"
               dropdownComponent="div"
-              onChange={handleCity}
-              data={cities}
+              data={cityList}
+              onChange={(e) => formik.setFieldValue("city", e)}
+              value={formik.values.city}
             />
           </div>
-        </div>
 
-        <Group position="center" mt="xs">
-          <Button size="xs" type="submit" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Group>
+          <Group position="center" mt="xs">
+            <Button size="xs" type="submit">
+              Submit
+            </Button>
+          </Group>
+        </form>
       </Box>
     </div>
   );

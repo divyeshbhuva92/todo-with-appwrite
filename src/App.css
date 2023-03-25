@@ -292,6 +292,9 @@
 }
 
 /* ------------------------ */
+
+/* ------------------------ */
+
 .contacthome-container {
   height: 100%;
   width: 100%;
@@ -426,7 +429,6 @@
 }
 
 /* ---------media query ---------------------------- */
-
 
 @media screen and (min-width: 992px) and (max-width: 1199px) {
   .main-todo-div > .showItems {
