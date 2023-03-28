@@ -34,10 +34,9 @@ export default function CreateContact() {
     );
   }, []);
 
+  // --------------------------------------- set country -------------------------------------
   const [currentCountry, setCurrentCountry] = useState([]);
   const [currentStCode, setCurrentStCode] = useState("");
-
-  // ----------------------- to empty state & city at change country -----------------------
 
   function handleCountry(cnt) {
     formik.setFieldValue("states", null);
@@ -264,6 +263,15 @@ export default function CreateContact() {
             }
             onChange={formik.handleChange}
             value={formik.values.email}
+          />
+
+          <TextInput
+            label="Profile Image"
+            mb="xs"
+            placeholder="Profile Image"
+            name="user_img"
+            onChange={formik.handleChange}
+            value={formik.values.user_img}
           />
 
           <div className="contact-address-input">
